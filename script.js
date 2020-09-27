@@ -21,51 +21,59 @@ let items = [{
     },
 ]
 
+
 let cart = []
+
 
 let list = document.querySelector('#items')
 
 items.forEach((item, i) => {
-    console.log(item.name)
     list.innerHTML += `<li>
-    <div>Name: ${item.name}</div>
-    <div>price: $${item.price}</div>
-    <image src="${item.image}"/>
-    <input type="number" placeholder="quantity" onchange='inputChange(${i}, "${item.name}", "${item.price}", ${item.image}")'/>
-    <button>Buy Item</button>
+        <div>Name: ${item.name}</div>
+        <div>price: $${item.price}</div>
+        <image src="${item.image}" />
+        <input type="number" placeholder="quantity" onchange='inputChange(${i}, "${item.name}", "${item.price}", "${item.image}")'/>
+        <button>Buy Item</button>
     </li>`
 })
+
 
 function showCart() {
     let cartItems = document.querySelector('#cart')
     let grandTotal = 0;
     cartItems.innerHTML = ''
     cart.forEach((item, i) => {
-        grandTotal += item.price + item.quantity
+        grandTotal += item.price * item.quantity
         cartItems.innerHTML += `<li>
-        <div>Name: ${item.name}</div>
-        <div>Quantity: $${item.quantity}</div>
-        <image src="${item.image}"/>
+            <div>Name: ${item.name}</div>
+            <div>Quantity: ${item.quantity}</div>
+            <image src="${item.image}" />
         </li>`
     })
 
-    document.querySelector('grandTotal').innerHTML = '$' + grandTotal
+    document.querySelector('#grandTotal').innerHTML = '$' + grandTotal
+
 }
 
 
-function inputChange(i, name, price, iamge) {
+
+function inputChange(i, name, price, image) {
     console.log('I want to buy the ', i, ' item named, ', name, ' that costs $', price)
     let listItem = document.querySelectorAll('li')[i]
     let input = listItem.querySelector('input')
     let button = listItem.querySelector('button')
+
     button.onclick = function() {
         cart.push({
             quantity: input.value,
             name: name,
             price: price,
-            image: iamge
+            image: image
         })
         console.log(cart)
         showCart()
     }
+
 }
+
+//document.querySelector('#two').style.backgroundColor = 'blue'
